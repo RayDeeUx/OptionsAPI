@@ -104,6 +104,9 @@ class $modify(GameLevelOptionsLayer) {
 		addToggle("Enable CBS", 3, m_level->m_cbsOverride == 1, "Force <cg>enable</c> <cy>Click Between Steps</c> on this level regardless of the global setting.");
 		addToggle("Disable CBS", 4, m_level->m_cbsOverride == 2, "Force <cr>disable</c> <cy>Click Between Steps</c> on this level regardless of the global setting.");
 
+		if (auto enableCBF = GJOptionsLayer::getToggleButton(3); enableCBF) enableCBF->m_notClickable = 1;
+		if (auto disableCBF = GJOptionsLayer::getToggleButton(4); disableCBF) disableCBF->m_notClickable = 1;
+
 		m_fields->debugLabel = CCLabelBMFont::create(fmt::format("{}", m_level->m_cbsOverride).c_str(), "bigFont.fnt");
 		this->m_mainLayer->addChild(m_fields->debugLabel);
 		m_fields->debugLabel->setPosition(winSize / 2.f);
