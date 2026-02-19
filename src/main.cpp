@@ -140,8 +140,10 @@ class $modify(GameLevelOptionsLayer) {
 					}
 				*/
 				const int origCBFOverride = m_level->m_cbsOverride;
-				if (opt == 3) m_level->m_cbsOverride = static_cast<unsigned int>(origCBFOverride != 1);
-				else {
+				if (opt == 3) {
+					m_level->m_cbsOverride = 1;
+					if (origCBFOverride == 1) m_level->m_cbsOverride = 0;
+				} else if (opt == 4) {
 					m_level->m_cbsOverride = 2;
 					if (origCBFOverride == 2) m_level->m_cbsOverride = 0;
 				}
