@@ -149,8 +149,8 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 		auto fields = m_fields.self();
 		if (!fields) return;
 
-		if (auto node = fields->fuckingStupidIgnoreDamageToggle) node->setVisible(page == 0);
-		if (auto node = fields->fuckingStupidPlaceholderToggle) node->setVisible(0);
+		if (auto node = fields->fuckingStupidIgnoreDamageToggle) node->setVisible(page == 1);
+		if (auto node = fields->fuckingStupidPlaceholderToggle) node->setScale(0);
 	}
 
 	void setupOptions() {
@@ -191,7 +191,7 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 				// highkey i eyeballed the CCPoint based on a screenshot cheeseworks sent here: https://discord.com/channels/911701438269386882/911702535373475870/1473814193152069844 [discord, #mod-dev-chat] --raydeeux
 				m_buttonMenu, ccp(409, 87), this,
 				this, 0.7f, 0.5f, 
-				m_maxLabelWidth, ccp(-6, 0), 
+				m_maxLabelWidth, ccp(6, 0), 
 				"goldFont.fnt", false, 0, 
 				nullptr
 			);
