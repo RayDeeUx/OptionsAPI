@@ -89,10 +89,6 @@ class $modify(GameLevelOptionsLayer) {
         }
     }
 
-	struct Fields {
-		CCLabelBMFont* debugLabel = nullptr;
-	};
-
 	void setupOptions() {
 		auto winSize = CCDirector::get()->getWinSize();
 
@@ -104,12 +100,12 @@ class $modify(GameLevelOptionsLayer) {
 		addToggle("Enable CBS", 3, m_level->m_cbsOverride == 1, "Force <cg>enable</c> <cy>Click Between Steps</c> on this level regardless of the global setting.");
 		addToggle("Disable CBS", 4, m_level->m_cbsOverride == 2, "Force <cr>disable</c> <cy>Click Between Steps</c> on this level regardless of the global setting.");
 
+		// robtop i hate you so FUCKING MUCH right now --raydeeux
 		if (auto enableCBF = GJOptionsLayer::getToggleButton(3); enableCBF) enableCBF->m_notClickable = 1;
-		if (auto disableCBF = GJOptionsLayer::getToggleButton(4); disableCBF) disableCBF->m_notClickable = 1;
+		else if (auto enableCBF = typeinfo_cast<CCMenuItemToggler*>(this->m_buttonMenu->getChildByTag(3))) enableCBF->m_notClickable = 1;
 
-		m_fields->debugLabel = CCLabelBMFont::create(fmt::format("{}", m_level->m_cbsOverride).c_str(), "bigFont.fnt");
-		this->m_mainLayer->addChild(m_fields->debugLabel);
-		m_fields->debugLabel->setPosition(winSize / 2.f);
+		if (auto disableCBF = GJOptionsLayer::getToggleButton(4); disableCBF) disableCBF->m_notClickable = 1;
+		else if (auto disableCBF = typeinfo_cast<CCMenuItemToggler*>(this->m_buttonMenu->getChildByTag(4))) disableCBF->m_notClickable = 1;
 		#endif
 
 		int index = GEODE_DESKTOP(3) GEODE_MOBILE(5); // remove ifdefs once desktop also gets CBF overrides --raydeeux
@@ -125,67 +121,8 @@ class $modify(GameLevelOptionsLayer) {
 			case 1: case 2:
 				return GameLevelOptionsLayer::didToggle(opt);
 			#ifdef GEODE_IS_MOBILE // remove ifdefs once desktop also gets CBF overrides --raydeeux
-			case 3: case 4: {
-				// manual refactor!!!! yay --raydeeux
-				/*
-				original decomp:
-				case 3: case 4:
-					iVar1 = *(int *)(*(long *)(this + 0x440) + 0x3fc);
-					if (param_1 == 3) {
-						uVar3 = (uint)(iVar1 != 1);
-					} else {
-						uVar3 = 2;
-						if (iVar1 == 2) {
-							uVar3 = 0;
-						}
-					}
-					*(uint *)(*(long *)(this + 0x440) + 0x3fc) = uVar3;
-					pCVar2 = (CCMenuItemToggler *)GJOptionsLayer::getToggleButton((GJOptionsLayer *)this,3);
-					if (pCVar2 != (CCMenuItemToggler *)0x0) {
-						CCMenuItemToggler::toggle(pCVar2,uVar3 == 1);
-					}
-					pCVar2 = (CCMenuItemToggler *)GJOptionsLayer::getToggleButton((GJOptionsLayer *)this,4);
-					if (pCVar2 != (CCMenuItemToggler *)0x0) {
-						CCMenuItemToggler::toggle(pCVar2,uVar3 == 2);
-						return;
-					}
-				*/
-				// bool enableCBFOrig = false;
-				// if (auto enableCBF = GJOptionsLayer::getToggleButton(3); enableCBF) {
-				// 	enableCBFOrig = enableCBF->isToggled();
-				// 	enableCBF->toggle(false);
-				// }
-				// bool disableCBFOrig = false;
-				// if (auto disableCBF = GJOptionsLayer::getToggleButton(4); disableCBF) {
-				// 	disableCBFOrig = disableCBF->isToggled();
-				// 	disableCBF->toggle(false);
-				// }
-
-				const int origCBFOverride = m_level->m_cbsOverride;
-				/*
-				if (opt == 3) {
-					m_level->m_cbsOverride = 1;
-					if (origCBFOverride == 1) m_level->m_cbsOverride = 0;
-				}
-				if (opt == 4) {
-					m_level->m_cbsOverride = 2;
-					if (origCBFOverride == 2) m_level->m_cbsOverride = 0;
-				}
-
-				if (auto enableCBF = GJOptionsLayer::getToggleButton(3); enableCBF) {
-					enableCBF->toggle(false);
-					if (m_level->m_cbsOverride == 1) enableCBF->toggle(true);
-				}
-				if (auto disableCBF = GJOptionsLayer::getToggleButton(4); disableCBF) {
-					disableCBF->toggle(false);
-					if (m_level->m_cbsOverride == 2) disableCBF->toggle(true);
-				}
-				*/
-				GameLevelOptionsLayer::didToggle(opt);
-
-				if (m_fields->debugLabel) m_fields->debugLabel->setString(fmt::format("{} (formerly {})", m_level->m_cbsOverride, origCBFOverride).c_str());
-				return;
-			}
+			case 3: case 4:
+				return GameLevelOptionsLayer::didToggle(opt);
 			#endif
 			default:
 				return std::next(g_preToggles.begin(), opt - GEODE_DESKTOP(3) GEODE_MOBILE(5))->second.m_callback(m_level); // this might be stupid idk
