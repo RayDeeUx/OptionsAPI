@@ -235,14 +235,14 @@ class $modify(GJOptionsLayer) {
 		GJOptionsLayer::goToPage(page);
 		if (this->getTag() != 20260219 || !typeinfo_cast<OAPIGameOptionsLayer*>(this)) return;
 
-		OAPIGameOptionsLayer* fooBar = static_cast<OAPIGameOptionsLayer*>(this);
-		if (foobar->m_baseGameLayer->m_level->m_levelType != GJLevelType::Editor) return;
+		OAPIGameOptionsLayer* fooBar = reinterpret_cast<OAPIGameOptionsLayer*>(this);
+		if (fooBar->m_baseGameLayer->m_level->m_levelType != GJLevelType::Editor) return;
 
 		auto fields = fooBar->m_fields.self();
 		if (!fields) return;
 		
-		if (auto node = foobar->m_mainLayer->getChildByType<CCLabelBMFont>(0); node && static_cast<std::string>(node->getString()) == "Ignore Damage" && static_cast<std::string>(node->getFntFile()) == "goldFont.fnt") {
-			node->setScale(page == 0 ? .4f : 0);
+		if (auto node = fooBar->m_mainLayer->getChildByType<CCLabelBMFont>(0); node && static_cast<std::string>(node->getString()) == "Ignore Damage" && static_cast<std::string>(node->getFntFile()) == "goldFont.fnt") {
+			node->setScale(page == 0 ? .5f : 0);
 		}
 
 		if (auto node = fields->fuckingStupidIgnoreDamageToggle) node->setScale(page == 0 ? 1 : 0);
