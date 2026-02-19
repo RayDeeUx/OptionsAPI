@@ -151,7 +151,7 @@ class $modify(GameLevelOptionsLayer) {
 				}
 				if (auto disableCBF = GJOptionsLayer::getToggleButton(4); disableCBF) {
 					disableCBF->toggle(false);
-					if (m_level->m_cbsOverride == 2) GdisableCBF->toggle(true);
+					if (m_level->m_cbsOverride == 2) disableCBF->toggle(true);
 				}
 				return;
 			}
