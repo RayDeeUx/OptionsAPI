@@ -137,8 +137,10 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 	void setupOptions() {
 		auto winSize = CCDirector::get()->getWinSize();
 
-		// robtop i hate you so much right now --raydeeux
+		// robtop i hate you so f!@$%^&*(*&^%$#$%^&*ing much right now --raydeeux
 		this->m_togglesPerPage = 12;
+		this->m_gap = 37.f;
+		this->m_offset = 32.f;
 
 		// TODO: full recreation to add descriptions and fix the stupid Practice Music Sync toggle
 		addToggle("Auto-Retry", 1, GameManager::get()->getGameVariable("0026"), "Instantly start a new attempt instead of showing the restart menu.");
