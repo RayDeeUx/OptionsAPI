@@ -159,6 +159,7 @@ class $modify(GameLevelOptionsLayer) {
 				// }
 
 				const int origCBFOverride = m_level->m_cbsOverride;
+				/*
 				if (opt == 3) {
 					m_level->m_cbsOverride = 1;
 					if (origCBFOverride == 1) m_level->m_cbsOverride = 0;
@@ -176,6 +177,8 @@ class $modify(GameLevelOptionsLayer) {
 					disableCBF->toggle(false);
 					if (m_level->m_cbsOverride == 2) disableCBF->toggle(true);
 				}
+				*/
+				GameLevelOptionsLayer::didToggle(opt);
 
 				if (m_fields->debugLabel) m_fields->debugLabel->setString(fmt::format("{} (formerly {})", m_level->m_cbsOverride, origCBFOverride).c_str());
 				return;
