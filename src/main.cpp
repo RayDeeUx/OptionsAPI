@@ -189,65 +189,65 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 				// in reality this should be GJOptionsLayer::onToggle with some extra stuff but it's easier to just recreate it
 				GameManager::get()->getGameVariable("0173"), 
 				// highkey i eyeballed the CCPoint based on a screenshot cheeseworks sent here: https://discord.com/channels/911701438269386882/911702535373475870/1473814193152069844 [discord, #mod-dev-chat] --raydeeux
-				m_buttonMenu, ccp(409, 87), this,
+				m_buttonMenu, ccp(399, 87), this,
 				this, 0.7f, 0.5f, 
 				m_maxLabelWidth, ccp(7, 0), 
 				"goldFont.fnt", false, 0, 
 				nullptr
 			);
 
-			// SAVE FOR DEBUGGING PURPOSES
+			// SAVE FOR DEBUGGING PURPOSES --raydeeux
 			/*
-			addToggle("HELLO WORLD", -1, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -2, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -3, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -4, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -5, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -6, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -7, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -8, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -9, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -10, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -11, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -12, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -13, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -14, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -15, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -16, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -17, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -18, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -19, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -20, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -21, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -22, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -23, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -24, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -25, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -26, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -27, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -28, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -29, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -30, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -31, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -32, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -33, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -34, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -35, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -36, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -37, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -38, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -39, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -40, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -41, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -42, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -43, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -44, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -45, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -46, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -47, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -48, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -49, false, "HELLO WORLD");
-			addToggle("HELLO WORLD", -50, false, "HELLO WORLD");
+			addToggle("DON'T PRESS ME!", -1, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -2, false, "DON'T PRESS ME!");
+			addToggle("DON'T PRESS ME!", -3, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -4, false, "DON'T PRESS ME!");
+			addToggle("DON'T PRESS ME!", -5, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -6, false, "DON'T PRESS ME!");
+			addToggle("DON'T PRESS ME!", -7, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -8, false, "DON'T PRESS ME!");
+			addToggle("I DON'T PRESS ME!-9, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -10, false, "DON'T PRESS ME!");
+			addToggle("DON'T PRESS ME!", -11, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -12, false, "DON'T PRESS ME!");
+			addToggle("DON'T PRESS ME!", -13, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -14, false, "DON'T PRESS ME!");
+			addToggle("DON'T PRESS ME!", -15, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -16, false, "DON'T PRESS ME!");
+			addToggle("DON'T PRESS ME!", -17, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -18, false, "DON'T PRESS ME!");
+			addToggle("DON'T PRESS ME!", -19, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -20, false, "DON'T PRESS ME!");
+			addToggle("DON'T PRESS ME!", -21, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -22, false, "DON'T PRESS ME!");
+			addToggle("DON'T PRESS ME!", -23, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -24, false, "DON'T PRESS ME!");
+			addToggle("DON'T PRESS ME!", -25, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -26, false, "DON'T PRESS ME!");
+			addToggle("DON'T PRESS ME!", -27, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -28, false, "DON'T PRESS ME!");
+			addToggle("DON'T PRESS ME!", -29, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -30, false, "DON'T PRESS ME!");
+			addToggle("DON'T PRESS ME!", -31, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -32, false, "DON'T PRESS ME!");
+			addToggle("DON'T PRESS ME!", -33, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -34, false, "DON'T PRESS ME!");
+			addToggle("DON'T PRESS ME!", -35, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -36, false, "DON'T PRESS ME!");
+			addToggle("DON'T PRESS ME!", -37, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -38, false, "DON'T PRESS ME!");
+			addToggle("DON'T PRESS ME!", -39, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -40, false, "DON'T PRESS ME!");
+			addToggle("DON'T PRESS ME!", -41, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -42, false, "DON'T PRESS ME!");
+			addToggle("DON'T PRESS ME!", -43, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -44, false, "DON'T PRESS ME!");
+			addToggle("DON'T PRESS ME!", -45, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -46, false, "DON'T PRESS ME!");
+			addToggle("DON'T PRESS ME!", -47, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -48, false, "DON'T PRESS ME!");
+			addToggle("DON'T PRESS ME!", -49, false, "I WILL CRASH GD");
+			addToggle("I WILL CRASH GD", -50, false, "DON'T PRESS ME!");
 			*/
 			//--raydeeux
 		}
