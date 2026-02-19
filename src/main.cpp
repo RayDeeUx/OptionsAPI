@@ -146,7 +146,7 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 		GameOptionsLayer::goToPage(page);
 		if (m_baseGameLayer->m_level->m_levelType != GJLevelType::Editor) return;
 
-		auto fields = m_fields->self();
+		auto fields = m_fields.self();
 		if (!fields) return;
 
 		if (auto node = fields->fuckingStupidIgnoreDamageToggle) node->setVisible(page == 0);
