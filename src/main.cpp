@@ -143,6 +143,7 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 	void goToPage(int page) {
 		GameOptionsLayer::goToPage(page);
 		if (m_baseGameLayer->m_level->m_levelType != GJLevelType::Editor) return;
+		geode::Notification::create(fmt::format("went to page {}", page))->show();
 		
 		if (auto node = this->m_mainLayer->getChildByType<CCLabelBMFont>(0); node && static_cast<std::string>(node->getString()) == "Ignore Damage" && static_cast<std::string>(node->getFntFile()) == "goldFont.fnt") node->setVisible(page == 0);
 
@@ -191,7 +192,7 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 				// highkey i eyeballed the CCPoint based on a screenshot cheeseworks sent here: https://discord.com/channels/911701438269386882/911702535373475870/1473814193152069844 [discord, #mod-dev-chat] --raydeeux
 				m_buttonMenu, ccp(409, 87), this,
 				this, 0.7f, 0.5f, 
-				m_maxLabelWidth, ccp(6, 0), 
+				m_maxLabelWidth, ccp(7, 0), 
 				"goldFont.fnt", false, 0, 
 				nullptr
 			);
