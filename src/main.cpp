@@ -185,6 +185,35 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 			);
 
 			addToggle("HELLO WORLD", -1, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -2, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -3, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -4, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -5, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -6, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -7, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -8, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -9, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -10, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -11, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -12, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -13, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -14, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -15, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -16, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -17, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -18, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -19, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -20, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -21, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -22, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -23, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -24, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -25, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -26, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -27, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -28, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -29, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -30, false, "HELLO WORLD");
 		}
 
 		CCMenuItemSpriteExtra* platUI = CCMenuItemSpriteExtra::create(
@@ -243,8 +272,7 @@ class $modify(GJOptionsLayer) {
 		
 		if (auto node = fooBar->getChildByType<CCLabelBMFont>(0); node && static_cast<std::string>(node->getString()) == "Ignore Damage" && static_cast<std::string>(node->getFntFile()) == "goldFont.fnt") {
 			node->setScale(page == 0 ? .5f : 0);
-		} else if (auto node = fooBar->getChildByType<CCLabelBMFont>(0)) geode::Notification::create(fmt::format("node: {}, string: {}, fntFile: {}", node != nullptr, node->getString(), node->getFntFile()), NotificationIcon::Info, 10.f)->show();
-		else geode::Notification::create("I FUCKING HATE ROBTOP, SCREENSHOT THIS", NotificationIcon::Error, 10.f)->show();
+		}
 
 		if (auto node = fields->fuckingStupidIgnoreDamageToggle) node->setScale(page == 0 ? 1 : 0);
 		if (auto node = fields->fuckingStupidPlaceholderToggle) node->setScale(0);
