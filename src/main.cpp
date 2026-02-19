@@ -34,7 +34,7 @@ std::map<std::string, EditorToggleSetting> g_editToggles;
 // $execute {
 $on_mod(Loaded) {
 	// new EventListener<EventFilter<AddPreToggleEvent>>(+[](AddPreToggleEvent* ev) {
-	auto preToggleListener = AddPreToggleEvent().listen([](std::string_view name, std::string_view modID, std::function<void(GJGameLevel*)> callback, std::function<bool(GJGameLevel*)> initialValue, std::string_view desc) {
+	auto preToggleListener = AddPreToggleEvent().listen([](std::string_view name, std::string_view modID, std::function<void(GJGameLevel*)> callback, std::function<bool(GJGameLevel*)> initialValue, std::string desc) {
 		geode::Mod* mod = geode::Loader::get()->getInstalledMod(modID);
 		if (mod) {
 			g_preToggles[fmt::format("{}", modID)] = PreToggleSetting{
@@ -49,7 +49,7 @@ $on_mod(Loaded) {
     });
 	preToggleListener.leak();
 	// new EventListener<EventFilter<AddMidToggleEvent>>(+[](AddMidToggleEvent* ev) {
-	auto midToggleListener = AddMidToggleEvent().listen([](std::string_view name, std::string_view modID, std::function<void(GJBaseGameLayer*)> callback, std::function<bool(GJBaseGameLayer*)> initialValue, std::string_view desc) {
+	auto midToggleListener = AddMidToggleEvent().listen([](std::string_view name, std::string_view modID, std::function<void(GJBaseGameLayer*)> callback, std::function<bool(GJBaseGameLayer*)> initialValue, std::string desc) {
 		geode::Mod* mod = geode::Loader::get()->getInstalledMod(modID);
 		if (mod) {
 			g_midToggles[fmt::format("{}", modID)] = MidToggleSetting{
@@ -64,7 +64,7 @@ $on_mod(Loaded) {
     });
 	midToggleListener.leak();
 	// new EventListener<EventFilter<AddEditToggleEvent>>(+[](AddEditToggleEvent* ev) {
-	auto editToggleListener = AddEditToggleEvent().listen([](std::string_view name, std::string_view modID, std::function<void()> callback, std::function<bool()> initialValue, std::string_view desc) {
+	auto editToggleListener = AddEditToggleEvent().listen([](std::string_view name, std::string_view modID, std::function<void()> callback, std::function<bool()> initialValue, std::string desc) {
 		geode::Mod* mod = geode::Loader::get()->getInstalledMod(modID);
 		if (mod) {
 			g_editToggles[fmt::format("{}", modID)] = EditorToggleSetting{
