@@ -34,45 +34,45 @@ std::map<std::string, EditorToggleSetting> g_editToggles;
 // $execute {
 $on_mod(Loaded) {
 	// new EventListener<EventFilter<AddPreToggleEvent>>(+[](AddPreToggleEvent* ev) {
-	auto preToggleListener = AddPreToggleEvent().listen([](std::string_view name, std::string_view modID, std::function<void(GJGameLevel*)> callback, std::function<bool(GJGameLevel*)> initialValue, std::string desc) {
+	auto preToggleListener = AddPreToggleEvent().listen([](std::string_view name, std::string_view modID, std::function<void(GJGameLevel*)> callback, std::function<bool(GJGameLevel*)> initialValue, std::string_view desc) {
 		geode::Mod* mod = geode::Loader::get()->getInstalledMod(modID);
 		if (mod) {
 			g_preToggles[fmt::format("{}", modID)] = PreToggleSetting{
-				name,
+				fmt::format("{}", name),
 				fmt::format("{} by {}{}", mod->getName(), mod->getDevelopers()[0], mod->getDevelopers().size() > 1 ? " and More" : ""),
 				callback,
 				initialValue,
-				desc
+				fmt::format("{}", desc)
 			};
 		}
         return ListenerResult::Stop;
     });
 	preToggleListener.leak();
 	// new EventListener<EventFilter<AddMidToggleEvent>>(+[](AddMidToggleEvent* ev) {
-	auto midToggleListener = AddMidToggleEvent().listen([](std::string_view name, std::string_view modID, std::function<void(GJBaseGameLayer*)> callback, std::function<bool(GJBaseGameLayer*)> initialValue, std::string desc) {
+	auto midToggleListener = AddMidToggleEvent().listen([](std::string_view name, std::string_view modID, std::function<void(GJBaseGameLayer*)> callback, std::function<bool(GJBaseGameLayer*)> initialValue, std::string_view desc) {
 		geode::Mod* mod = geode::Loader::get()->getInstalledMod(modID);
 		if (mod) {
 			g_midToggles[fmt::format("{}", modID)] = MidToggleSetting{
-				name,
+				fmt::format("{}", name),
 				fmt::format("{} by {}{}", mod->getName(), mod->getDevelopers()[0], mod->getDevelopers().size() > 1 ? " and More" : ""),
 				callback,
 				initialValue,
-				desc
+				fmt::format("{}", desc)
 			};
 		}
         return ListenerResult::Stop;
     });
 	midToggleListener.leak();
 	// new EventListener<EventFilter<AddEditToggleEvent>>(+[](AddEditToggleEvent* ev) {
-	auto editToggleListener = AddEditToggleEvent().listen([](std::string_view name, std::string_view modID, std::function<void()> callback, std::function<bool()> initialValue, std::string desc) {
+	auto editToggleListener = AddEditToggleEvent().listen([](std::string_view name, std::string_view modID, std::function<void()> callback, std::function<bool()> initialValue, std::string_view desc) {
 		geode::Mod* mod = geode::Loader::get()->getInstalledMod(modID);
 		if (mod) {
 			g_editToggles[fmt::format("{}", modID)] = EditorToggleSetting{
-				name,
+				fmt::format("{}", name),
 				fmt::format("{} by {}{}", mod->getName(), mod->getDevelopers()[0], mod->getDevelopers().size() > 1 ? " and More" : ""),
 				callback,
 				initialValue,
-				desc
+				fmt::format("{}", desc)
 			};
 		}
         return ListenerResult::Stop;
