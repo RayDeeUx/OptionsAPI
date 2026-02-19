@@ -139,14 +139,16 @@ class $modify(GameLevelOptionsLayer) {
 						return;
 					}
 				*/
+				if (auto enableCBF = GJOptionsLayer::getToggleButton(3); enableCBF) enableCBF->toggle(false);
+				if (auto disableCBF = GJOptionsLayer::getToggleButton(4); disableCBF) disableCBF->toggle(false);
 				const int origCBFOverride = m_level->m_cbsOverride;
 				if (opt == 3) m_level->m_cbsOverride = static_cast<unsigned int>(origCBFOverride != 1);
 				else {
 					m_level->m_cbsOverride = 2;
 					if (origCBFOverride == 2) m_level->m_cbsOverride = 0;
 				}
-				if (auto enableCBF = GJOptionsLayer::getToggleButton(3); enableCBF) enableCBF->toggle(origCBFOverride != 2);
-				if (auto disableCBF = GJOptionsLayer::getToggleButton(4); disableCBF) disableCBF->toggle(origCBFOverride != 1);
+				if (auto enableCBF = GJOptionsLayer::getToggleButton(3); enableCBF && m_level->m_cbsOverride == 1) enableCBF->toggle(true);
+				if (auto disableCBF = GJOptionsLayer::getToggleButton(4); disableCBF && m_level->m_cbsOverride == 2) disableCBF->toggle(true);
 				return;
 			}
 			#endif
