@@ -147,16 +147,16 @@ class $modify(GameLevelOptionsLayer) {
 						return;
 					}
 				*/
-				bool enableCBFOrig = false;
-				if (auto enableCBF = GJOptionsLayer::getToggleButton(3); enableCBF) {
-					enableCBFOrig = enableCBF->isToggled();
-					enableCBF->toggle(false);
-				}
-				bool disableCBFOrig = false;
-				if (auto disableCBF = GJOptionsLayer::getToggleButton(4); disableCBF) {
-					disableCBFOrig = disableCBF->isToggled();
-					disableCBF->toggle(false);
-				}
+				// bool enableCBFOrig = false;
+				// if (auto enableCBF = GJOptionsLayer::getToggleButton(3); enableCBF) {
+				// 	enableCBFOrig = enableCBF->isToggled();
+				// 	enableCBF->toggle(false);
+				// }
+				// bool disableCBFOrig = false;
+				// if (auto disableCBF = GJOptionsLayer::getToggleButton(4); disableCBF) {
+				// 	disableCBFOrig = disableCBF->isToggled();
+				// 	disableCBF->toggle(false);
+				// }
 
 				const int origCBFOverride = m_level->m_cbsOverride;
 				if (opt == 3) {
@@ -168,11 +168,13 @@ class $modify(GameLevelOptionsLayer) {
 					if (origCBFOverride == 2) m_level->m_cbsOverride = 0;
 				}
 
-				if (m_level->m_cbsOverride == 1) {
-					if (auto enableCBF = GJOptionsLayer::getToggleButton(3); enableCBF) enableCBF->toggle(enableCBFOrig);
+				if (auto enableCBF = GJOptionsLayer::getToggleButton(3); enableCBF) {
+					enableCBF->toggle(false);
+					if (m_level->m_cbsOverride == 1) enableCBF->toggle(true);
 				}
-				if (m_level->m_cbsOverride == 2) {
-					if (auto disableCBF = GJOptionsLayer::getToggleButton(4); disableCBF) disableCBF->toggle(disableCBFOrig);
+				if (auto disableCBF = GJOptionsLayer::getToggleButton(4); disableCBF) {
+					disableCBF->toggle(false);
+					if (m_level->m_cbsOverride == 2) disableCBF->toggle(true);
 				}
 
 				if (m_fields->debugLabel) m_fields->debugLabel->setString(fmt::format("{} (formerly {})", m_level->m_cbsOverride, origCBFOverride).c_str());
