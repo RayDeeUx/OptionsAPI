@@ -121,6 +121,14 @@ class $modify(GameLevelOptionsLayer) {
 
 #include <Geode/modify/GameOptionsLayer.hpp>
 class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
+	// sorry for swearing in source code nin, you know how it is with me seeing rob fumble harder than the average NFL player --raydeeux
+	struct Fields {
+		CCMenuItemSpriteExtra* fuckingStupidIgnoreDamageToggle = nullptr;
+		CCLabelBMFont* fuckingStupidGoldFontLabel = nullptr;
+		CCMenuItemSpriteExtra* fuckingStupidPlaceholderToggle = nullptr;
+		CCLabelBMFont* fuckingStupidPlaceholderLabel = nullptr;
+	};
+
 	static void onModify(auto& self) {
         if (!self.setHookPriority("GameOptionsLayer::setupOptions", -4000)) {
 			// nin i'm so sorry, i want -9999999 prio as well but alk will yell at you if you kept -9999999 prio --raydeeux
@@ -132,6 +140,19 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 		CCMenuItemToggler* toggle = typeinfo_cast<CCMenuItemToggler*>(obj);
 		GameManager::get()->toggleGameVariable("0173");
 		if (auto pl = typeinfo_cast<PlayLayer*>(this->m_baseGameLayer)) pl->toggleIgnoreDamage(GameManager::get()->getGameVariable("0173"));
+	}
+
+	void goToPage(int page) {
+		GameOptionsLayer::goToPage(page);
+		if (m_baseGameLayer->m_level->m_levelType != GJLevelType::Editor) return;
+
+		auto fields = m_fields->self();
+		if (!fields) return;
+
+		if (auto node = fields->fuckingStupidIgnoreDamageToggle) node->setVisible(page == 0);
+		if (auto node = fields->fuckingStupidGoldFontLabel) node->setVisible(page == 0);
+		if (auto node = fields->fuckingStupidPlaceholderToggle) node->setVisible(false);
+		if (auto node = fields->fuckingStupidPlaceholderLabel) node->setVisible(false);
 	}
 
 	void setupOptions() {
@@ -156,7 +177,17 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 		addToggle("Practice Music Sync", 10, m_baseGameLayer->m_practiceMusicSync, "Use the level's song instead of the normal practice mode song.");
 
 		if (m_baseGameLayer->m_level->m_levelType == GJLevelType::Editor) {
-			GameToolbox::createToggleButton(
+			// dummy toggle to trick the UI
+			constexpr int placeholderToggleTag = 0;
+			addToggle("PLACEHOLDER TOGGLE", placeholderToggleTag, false, ""); // DO NOT ADD DESCRIPTION. OTHERWISE THAT'S ONE MORE BUTTON TO GETCHILDBYTAG AND THAT WILL BE A FUCKING PAIN. --raydeeux
+			
+			m_fields->fuckingStupidPlaceholderToggle = this->m_buttonMenu->getChildByTag(placeholderToggleTag);
+			if (!m_fields->fuckingStupidPlaceholderToggle) geode::Notification::create("[Toggle] SOMETHING WENT WRONG. SCREENSHOT THIS, QUICK!!", NotificationIcon::Error, 10.f)->show(); // DEBUG LINE, REMOVE FROM PROD!!! --raydeeux
+
+			m_fields->fuckingStupidPlaceholderLabel = this->m_mainLayer->getChildByType<CCLayer>(0)->getChildByType<CCLabelBMFont>(-1);
+			if (!m_fields->fuckingStupidPlaceholderLabel) geode::Notification::create("[Label] SOMETHING WENT WRONG. SCREENSHOT THIS, QUICK!!", NotificationIcon::Error, 10.f)->show(); // DEBUG LINE, REMOVE FROM PROD!!! --raydeeux
+			// lowkey i don't know how the hell we're gonna go about hiding the label. --raydeeux
+			m_fields->fuckingStupidIgnoreDamageToggle = GameToolbox::createToggleButton(
 				"Ignore Damage", 
 				menu_selector(OAPIGameOptionsLayer::onIgnoreDamage), 
 				// in reality this should be GJOptionsLayer::onToggle with some extra stuff but it's easier to just recreate it
@@ -164,10 +195,11 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 				// highkey i eyeballed the CCPoint based on a screenshot cheeseworks sent here: https://discord.com/channels/911701438269386882/911702535373475870/1473814193152069844 [discord, #mod-dev-chat] --raydeeux
 				m_buttonMenu, ccp(410, 87), this,
 				this, 0.7f, 0.5f, 
-				m_maxLabelWidth, ccp(0, 0), 
+				m_maxLabelWidth, ccp(-7, 0), 
 				"goldFont.fnt", false, 0, 
 				nullptr
 			);
+			m_fields->fuckingStupidGoldFontLabel = this->m_mainLayer->getChildByType<CCLabelBMFont>(0);
 		}
 
 		CCMenuItemSpriteExtra* platUI = CCMenuItemSpriteExtra::create(
@@ -200,6 +232,7 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 
 	void didToggle(int opt) {
 		switch (opt) {
+			case 0: return;
 			case 1: case 2: case 3: case 4: case 5:
 			case 6: case 7: case 8: case 9: case 11:
 				return GameOptionsLayer::didToggle(opt);
