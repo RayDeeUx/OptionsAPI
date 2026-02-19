@@ -93,12 +93,17 @@ class $modify(GameLevelOptionsLayer) {
 		auto winSize = CCDirector::get()->getWinSize();
 
 		// do this to add descriptions to low detail mode and disable shake
-		addToggle("Low Detail Mode", 1, m_level->m_lowDetailModeToggled, "Disables all objects marked as High Detail in the level."); // rewrite desc for consistency with shake trigger toggle. original desc: Toggles off all objects marked as High Detail.
-		addToggle("Disable Shake", 2, m_level->m_disableShakeToggled, "Disables all shake triggers in the level.");
+		auto lowDetailMode = addToggle("Low Detail Mode", 1, m_level->m_lowDetailModeToggled, "Disables all objects marked as High Detail in the level."); // rewrite desc for consistency with shake trigger toggle. original desc: Toggles off all objects marked as High Detail.
+		auto disableShake = addToggle("Disable Shake", 2, m_level->m_disableShakeToggled, "Disables all shake triggers in the level.");
 		#ifdef GEODE_IS_MOBILE
 		// do this to add CBF overrides to mirror vanilla GD vehavior --raydeeux
-		addToggle("Enable CBS", 3, m_level->m_cbsOverride == 1, "Force <cg>enable</c> <cy>Click Between Steps</c> on this level regardless of the global setting.");
-		addToggle("Disable CBS", 4, m_level->m_cbsOverride == 2, "Force <cr>disable</c> <cy>Click Between Steps</c> on this level regardless of the global setting.");
+		auto enableCBF = addToggle("Enable CBS", 3, m_level->m_cbsOverride == 1, "Force <cg>enable</c> <cy>Click Between Steps</c> on this level regardless of the global setting.");
+		auto disableCBF = addToggle("Disable CBS", 4, m_level->m_cbsOverride == 2, "Force <cr>disable</c> <cy>Click Between Steps</c> on this level regardless of the global setting.");
+		
+		m_toggleButtons[1] = lowDetailMode;
+		m_toggleButtons[2] = disableShake;
+		m_toggleButtons[3] = enableCBF;
+		m_toggleButtons[4] = disableCBF;
 		#endif
 
 		int index = GEODE_DESKTOP(3) GEODE_MOBILE(5); // remove ifdefs once desktop also gets CBF overrides --raydeeux
@@ -137,21 +142,38 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 	void setupOptions() {
 		auto winSize = CCDirector::get()->getWinSize();
 
+		// robtop i hate you so much right now --raydeeux
+		this->m_togglesPerPage = 12;
+
 		// TODO: full recreation to add descriptions and fix the stupid Practice Music Sync toggle
-		addToggle("Auto-Retry", 1, GameManager::get()->getGameVariable("0026"), "Instantly start a new attempt instead of showing the restart menu.");
-		addToggle("Auto-Checkpoints", 2, GameManager::get()->getGameVariable("0027"), "Automatically place checkpoints occasionally.");
-		addToggle("Show Progress Bar", 3, GameManager::get()->m_showProgressBar, "Show the progress bar at the top of the screen.");
-		addToggle("Show Percentage", 4, GameManager::get()->getGameVariable("0040"), "Show the current percentage at the top of the screen. (Classic Mode only)");
-		addToggle("Show Time", 7, GameManager::get()->getGameVariable("0145"), "Show the current time at the top of the screen. (Platformer Mode only)");
-		addToggle("Audio Visualizer", 5, GameManager::get()->getGameVariable("0144"), "Enables an audio visualizer on the side of the screen.");
-		addToggle("Show Info Label", 6, GameManager::get()->getGameVariable("0109"), "Show a label containing info about the level.");
-		addToggle("Disable Checkpoints", 8, GameManager::get()->getGameVariable("0146"), "Disable platformer mode checkpoints and always respawn from the beginning. (Platformer Mode only)");
-		addToggle("Show Hitboxes", 9, GameManager::get()->getGameVariable("0166"), "Shows hitboxes while in practice mode.");
-		addToggle("Hitbox On Death", 11, GameManager::get()->getGameVariable("0179"), "Shows hitboxes upon death in both normal and practice mode.");
-		addToggle("Practice Music Sync", 10, m_baseGameLayer->m_practiceMusicSync, "Use the level's song instead of the normal practice mode song.");
+		auto autoRetry = addToggle("Auto-Retry", 1, GameManager::get()->getGameVariable("0026"), "Instantly start a new attempt instead of showing the restart menu.");
+		auto autoCheckpoints = addToggle("Auto-Checkpoints", 2, GameManager::get()->getGameVariable("0027"), "Automatically place checkpoints occasionally.");
+		auto showProgress = addToggle("Show Progress Bar", 3, GameManager::get()->m_showProgressBar, "Show the progress bar at the top of the screen.");
+		auto showPercentage = addToggle("Show Percentage", 4, GameManager::get()->getGameVariable("0040"), "Show the current percentage at the top of the screen. (Classic Mode only)");
+		auto showTime = addToggle("Show Time", 7, GameManager::get()->getGameVariable("0145"), "Show the current time at the top of the screen. (Platformer Mode only)");
+		auto audioVisualizer = addToggle("Audio Visualizer", 5, GameManager::get()->getGameVariable("0144"), "Enables an audio visualizer on the side of the screen.");
+		auto showInfoLabel = addToggle("Show Info Label", 6, GameManager::get()->getGameVariable("0109"), "Show a label containing info about the level.");
+		auto disableCheckpoints = addToggle("Disable Checkpoints", 8, GameManager::get()->getGameVariable("0146"), "Disable platformer mode checkpoints and always respawn from the beginning. (Platformer Mode only)");
+		auto showHitboxes = addToggle("Show Hitboxes", 9, GameManager::get()->getGameVariable("0166"), "Shows hitboxes while in practice mode.");
+		auto hitboxOnDeath = addToggle("Hitbox On Death", 11, GameManager::get()->getGameVariable("0179"), "Shows hitboxes upon death in both normal and practice mode.");
+		auto practiceMusicSync = addToggle("Practice Music Sync", 10, m_baseGameLayer->m_practiceMusicSync, "Use the level's song instead of the normal practice mode song.");
+
+		#ifdef GEODE_IS_MOBILE
+		m_toggleButtons[1] = autoRetry;
+		m_toggleButtons[2] = autoCheckpoints;
+		m_toggleButtons[3] = showProgress;
+		m_toggleButtons[4] = showPercentage;
+		m_toggleButtons[7] = showTime;
+		m_toggleButtons[5] = audioVisualizer;
+		m_toggleButtons[6] = showInfoLabel;
+		m_toggleButtons[8] = disableCheckpoints;
+		m_toggleButtons[9] = showHitboxes;
+		m_toggleButtons[11] = hitboxOnDeath;
+		m_toggleButtons[10] = practiceMusicSync;
+		#endif
 
 		if (m_baseGameLayer->m_level->m_levelType == GJLevelType::Editor) {
-			GameToolbox::createToggleButton(
+			auto ignoreDamage = GameToolbox::createToggleButton(
 				"Ignore Damage", 
 				menu_selector(OAPIGameOptionsLayer::onIgnoreDamage), 
 				// in reality this should be GJOptionsLayer::onToggle with some extra stuff but it's easier to just recreate it
@@ -163,6 +185,9 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 				"goldFont.fnt", false, 0, 
 				nullptr
 			);
+			#ifdef GEODE_IS_MOBILE
+			m_toggleButtons[12] = ignoreDamage;
+			#endif
 		}
 
 		CCMenuItemSpriteExtra* platUI = CCMenuItemSpriteExtra::create(
