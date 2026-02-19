@@ -224,6 +224,8 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 				nullptr
 			);
 
+			// SAVE FOR DEBUGGING PURPOSES
+			/*
 			addToggle("HELLO WORLD", -1, false, "HELLO WORLD");
 			addToggle("HELLO WORLD", -2, false, "HELLO WORLD");
 			addToggle("HELLO WORLD", -3, false, "HELLO WORLD");
@@ -274,6 +276,8 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 			addToggle("HELLO WORLD", -48, false, "HELLO WORLD");
 			addToggle("HELLO WORLD", -49, false, "HELLO WORLD");
 			addToggle("HELLO WORLD", -50, false, "HELLO WORLD");
+			*/
+			//--raydeeux
 		}
 
 		CCMenuItemSpriteExtra* platUI = CCMenuItemSpriteExtra::create(
