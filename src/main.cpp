@@ -140,21 +140,8 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 		if (auto pl = typeinfo_cast<PlayLayer*>(this->m_baseGameLayer)) pl->toggleIgnoreDamage(GameManager::get()->getGameVariable("0173"));
 	}
 
-	void goToPage(int page) {
-		GameOptionsLayer::goToPage(page);
-		if (m_baseGameLayer->m_level->m_levelType != GJLevelType::Editor) return;
-		geode::Notification::create(fmt::format("went to page {}", page))->show();
-		
-		if (auto node = this->m_mainLayer->getChildByType<CCLabelBMFont>(0); node && static_cast<std::string>(node->getString()) == "Ignore Damage" && static_cast<std::string>(node->getFntFile()) == "goldFont.fnt") node->setVisible(page == 0);
-
-		auto fields = m_fields.self();
-		if (!fields) return;
-
-		if (auto node = fields->fuckingStupidIgnoreDamageToggle) node->setVisible(page == 1);
-		if (auto node = fields->fuckingStupidPlaceholderToggle) node->setScale(0);
-	}
-
 	void setupOptions() {
+		this->setTag(20260219);
 		auto winSize = CCDirector::get()->getWinSize();
 
 		// robtop i hate you so f!@$%^&*(*&^%$#$%^&*ing much right now --raydeeux
@@ -239,6 +226,27 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 			default:
 				return std::next(g_midToggles.begin(), opt - 12)->second.m_callback(m_baseGameLayer); // this might be stupid idk
 		}
+	}
+};
+
+#include <Geode/modify/GJOptionsLayer.hpp>
+class $modify(GJOptionsLayer) {
+	void goToPage(int page) {
+		GJOptionsLayer::goToPage(page);
+		if (this->getTag() != 20260219 || !typeinfo_cast<OAPIGameOptionsLayer*>(this)) return;
+
+		OAPIGameOptionsLayer* fooBar = static_cast<OAPIGameOptionsLayer*>(this);
+		if (foobar->m_baseGameLayer->m_level->m_levelType != GJLevelType::Editor) return;
+
+		auto fields = fooBar->m_fields.self();
+		if (!fields) return;
+		
+		if (auto node = foobar->m_mainLayer->getChildByType<CCLabelBMFont>(0); node && static_cast<std::string>(node->getString()) == "Ignore Damage" && static_cast<std::string>(node->getFntFile()) == "goldFont.fnt") {
+			node->setScale(page == 0 ? .4f : 0);
+		}
+
+		if (auto node = fields->fuckingStupidIgnoreDamageToggle) node->setScale(page == 0 ? 1 : 0);
+		if (auto node = fields->fuckingStupidPlaceholderToggle) node->setScale(0);
 	}
 };
 
