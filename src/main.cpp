@@ -140,7 +140,7 @@ class $modify(GameLevelOptionsLayer) {
 					}
 				*/
 				if (auto enableCBF = GJOptionsLayer::getToggleButton(3); enableCBF) enableCBF->toggle(!enableCBF->isToggled());
-				if (auto disableCBF = GJOptionsLayer::getToggleButton(4); disableCBF) disableCBF->toggle(!enableCBF->isToggled());
+				if (auto disableCBF = GJOptionsLayer::getToggleButton(4); disableCBF) disableCBF->toggle(!disableCBF->isToggled());
 				const int origCBFOverride = m_level->m_cbsOverride;
 				if (opt == 3) m_level->m_cbsOverride = static_cast<unsigned int>(origCBFOverride != 1);
 				else {
