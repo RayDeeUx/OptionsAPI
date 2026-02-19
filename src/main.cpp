@@ -114,8 +114,41 @@ class $modify(GameLevelOptionsLayer) {
 			case 1: case 2:
 				return GameLevelOptionsLayer::didToggle(opt);
 			#ifdef GEODE_IS_MOBILE // remove ifdefs once desktop also gets CBF overrides --raydeeux
-			case 3: case 4:
-				return geode::Notification::create("FUCK ROBTOP AND HIS SHITTY CODE. IM REDOING THIS MYSELF.", NotificationIcon::Error, 10.f)->show();
+			case 3: case 4: {
+				// manual refactor!!!! yay --raydeeux
+				/*
+				original decomp:
+				case 3: case 4:
+					iVar1 = *(int *)(*(long *)(this + 0x440) + 0x3fc);
+					if (param_1 == 3) {
+						uVar3 = (uint)(iVar1 != 1);
+					} else {
+						uVar3 = 2;
+						if (iVar1 == 2) {
+							uVar3 = 0;
+						}
+					}
+					*(uint *)(*(long *)(this + 0x440) + 0x3fc) = uVar3;
+					pCVar2 = (CCMenuItemToggler *)GJOptionsLayer::getToggleButton((GJOptionsLayer *)this,3);
+					if (pCVar2 != (CCMenuItemToggler *)0x0) {
+						CCMenuItemToggler::toggle(pCVar2,uVar3 == 1);
+					}
+					pCVar2 = (CCMenuItemToggler *)GJOptionsLayer::getToggleButton((GJOptionsLayer *)this,4);
+					if (pCVar2 != (CCMenuItemToggler *)0x0) {
+						CCMenuItemToggler::toggle(pCVar2,uVar3 == 2);
+						return;
+					}
+				*/
+				const int origCBFOverride = m_level->m_cbsOverride;
+				if (opt == 3) m_level->m_cbsOverride = static_cast<unsigned int>(origCBFOverride != 1);
+				else {
+					m_level->m_cbsOverride = 2;
+					if (origCBFOverride == 2) m_level->m_cbsOverride = 0;
+				}
+				if (auto enableCBF = GJOptionsLayer::getToggleButton(3); enableCBF) enableCBF->toggle(m_level->m_cbsOverride == 1);
+				if (auto disableCBF = GJOptionsLayer::getToggleButton(4); disableCBF) disableCBF->toggle(m_level->m_cbsOverride == 2);
+				return;
+			}
 			#endif
 			default:
 				return std::next(g_preToggles.begin(), opt - GEODE_DESKTOP(3) GEODE_MOBILE(5))->second.m_callback(m_level); // this might be stupid idk
