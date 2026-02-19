@@ -123,10 +123,10 @@ class $modify(GameLevelOptionsLayer) {
 class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 	// sorry for swearing in source code nin, you know how it is with me seeing rob fumble harder than the average NFL player --raydeeux
 	struct Fields {
-		CCMenuItemToggler* fuckingStupidIgnoreDamageToggle = nullptr;
-		CCLabelBMFont* fuckingStupidGoldFontLabel = nullptr;
-		CCMenuItemToggler* fuckingStupidPlaceholderToggle = nullptr;
-		CCLabelBMFont* fuckingStupidPlaceholderLabel = nullptr;
+		CCNode* fuckingStupidIgnoreDamageToggle = nullptr;
+		CCNode* fuckingStupidGoldFontLabel = nullptr;
+		CCNode* fuckingStupidPlaceholderToggle = nullptr;
+		CCNode* fuckingStupidPlaceholderLabel = nullptr;
 	};
 
 	static void onModify(auto& self) {
@@ -183,9 +183,11 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 			
 			m_fields->fuckingStupidPlaceholderToggle = typeinfo_cast<CCMenuItemToggler*>(this->m_buttonMenu->getChildByTag(placeholderToggleTag));
 			if (!m_fields->fuckingStupidPlaceholderToggle) geode::Notification::create("[Toggle] SOMETHING WENT WRONG. SCREENSHOT THIS, QUICK!!", NotificationIcon::Error, 10.f)->show(); // DEBUG LINE, REMOVE FROM PROD!!! --raydeeux
+			else m_fields->fuckingStupidPlaceholderToggle->setVisible(false);
 
-			m_fields->fuckingStupidPlaceholderLabel = this->m_mainLayer->getChildByType<CCLayer>(0)->getChildByType<CCLabelBMFont>(-1);
+			m_fields->fuckingStupidPlaceholderLabel = this->m_mainLayer->getChildByType<CCLayer>(0); //->getChildByType<CCLabelBMFont>(-1) NOT YET FINISHED
 			if (!m_fields->fuckingStupidPlaceholderLabel) geode::Notification::create("[Label] SOMETHING WENT WRONG. SCREENSHOT THIS, QUICK!!", NotificationIcon::Error, 10.f)->show(); // DEBUG LINE, REMOVE FROM PROD!!! --raydeeux
+			else m_fields->fuckingStupidPlaceholderLabel->setVisible(false);
 			// lowkey i don't know how the hell we're gonna go about hiding the label. --raydeeux
 			m_fields->fuckingStupidIgnoreDamageToggle = GameToolbox::createToggleButton(
 				"Ignore Damage", 
@@ -193,9 +195,9 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 				// in reality this should be GJOptionsLayer::onToggle with some extra stuff but it's easier to just recreate it
 				GameManager::get()->getGameVariable("0173"), 
 				// highkey i eyeballed the CCPoint based on a screenshot cheeseworks sent here: https://discord.com/channels/911701438269386882/911702535373475870/1473814193152069844 [discord, #mod-dev-chat] --raydeeux
-				m_buttonMenu, ccp(410, 87), this,
+				m_buttonMenu, ccp(409, 87), this,
 				this, 0.7f, 0.5f, 
-				m_maxLabelWidth, ccp(-7, 0), 
+				m_maxLabelWidth, ccp(-6, 0), 
 				"goldFont.fnt", false, 0, 
 				nullptr
 			);
