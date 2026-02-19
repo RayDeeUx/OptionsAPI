@@ -156,6 +156,7 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 				menu_selector(OAPIGameOptionsLayer::onIgnoreDamage), 
 				// in reality this should be GJOptionsLayer::onToggle with some extra stuff but it's easier to just recreate it
 				GameManager::get()->getGameVariable("0173"), 
+				// highkey i eyeballed the CCPoint based on a screenshot cheeseworks sent here: https://discord.com/channels/911701438269386882/911702535373475870/1473814193152069844 [discord, #mod-dev-chat] --raydeeux
 				m_buttonMenu, ccp(345, 87), this,
 				this, 0.7f, 0.5f, 
 				m_maxLabelWidth, ccp(7, 0), 
