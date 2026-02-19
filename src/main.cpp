@@ -124,7 +124,6 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 	// sorry for swearing in source code nin, you know how it is with me seeing rob fumble harder than the average NFL player --raydeeux
 	struct Fields {
 		CCNode* fuckingStupidIgnoreDamageToggle = nullptr;
-		CCNode* fuckingStupidGoldFontLabel = nullptr;
 		CCNode* fuckingStupidPlaceholderToggle = nullptr;
 	};
 
@@ -144,13 +143,14 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 	void goToPage(int page) {
 		GameOptionsLayer::goToPage(page);
 		if (m_baseGameLayer->m_level->m_levelType != GJLevelType::Editor) return;
+		
+		if (auto node = this->m_mainLayer->getChildByType<CCLabelBMFont>(0); node && static_cast<std::string>(node->getString()) == "Ignore Damage" && static_cast<std::string>(node->getFntFile()) == "goldFont.fnt") node->setVisible(page == 0);
 
 		auto fields = m_fields.self();
 		if (!fields) return;
 
 		if (auto node = fields->fuckingStupidIgnoreDamageToggle) node->setVisible(page == 0);
-		if (auto node = fields->fuckingStupidGoldFontLabel) node->setVisible(page == 0);
-		if (auto node = fields->fuckingStupidPlaceholderToggle) node->setVisible(false);
+		if (auto node = fields->fuckingStupidPlaceholderToggle) node->setVisible(0);
 	}
 
 	void setupOptions() {
@@ -180,8 +180,7 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 			addToggle(" ", placeholderToggleTag, false, ""); // DO NOT ADD DESCRIPTION. OTHERWISE THAT'S ONE MORE BUTTON TO GETCHILDBYTAG AND THAT WILL BE A FUCKING PAIN. --raydeeux
 			
 			m_fields->fuckingStupidPlaceholderToggle = typeinfo_cast<CCMenuItemToggler*>(this->m_buttonMenu->getChildByTag(placeholderToggleTag));
-			if (!m_fields->fuckingStupidPlaceholderToggle) geode::Notification::create("[Toggle] SOMETHING WENT WRONG. SCREENSHOT THIS, QUICK!!", NotificationIcon::Error, 10.f)->show(); // DEBUG LINE, REMOVE FROM PROD!!! --raydeeux
-			else m_fields->fuckingStupidPlaceholderToggle->setVisible(false);
+			if (m_fields->fuckingStupidPlaceholderToggle) m_fields->fuckingStupidPlaceholderToggle->setScale(0);
 
 			// lowkey i don't know how the hell we're gonna go about hiding the label. --raydeeux
 			m_fields->fuckingStupidIgnoreDamageToggle = GameToolbox::createToggleButton(
@@ -197,8 +196,8 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 				nullptr
 			);
 			m_fields->fuckingStupidGoldFontLabel = this->m_mainLayer->getChildByType<CCLabelBMFont>(0);
-			if (!m_fields->fuckingStupidIgnoreDamageToggle) geode::Notification::create("[IgnoreDamageToggle] SOMETHING WENT WRONG. SCREENSHOT THIS, QUICK!!", NotificationIcon::Error, 10.f)->show(); // DEBUG LINE, REMOVE FROM PROD!!! --raydeeux
-			if (!m_fields->fuckingStupidGoldFontLabel) geode::Notification::create("[GoldFontLabel] SOMETHING WENT WRONG. SCREENSHOT THIS, QUICK!!", NotificationIcon::Error, 10.f)->show(); // DEBUG LINE, REMOVE FROM PROD!!! --raydeeux
+
+			addToggle("HELLO WORLD", -1, false, "HELLO WORLD");
 		}
 
 		CCMenuItemSpriteExtra* platUI = CCMenuItemSpriteExtra::create(
