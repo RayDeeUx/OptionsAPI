@@ -295,7 +295,7 @@ so a lot of node tagging and node casting had to happen.
 class $modify(GJOptionsLayer) {
 	void goToPage(int page) {
 		GJOptionsLayer::goToPage(page);
-		if (this->getTag() != 20260219 || !this->getUserObject("options-api"_spr) || !this->getUserObject("options-api"_spr)->getValue() || !typeinfo_cast<GameOptionsLayer*>(this)) return;
+		if (this->getTag() != 20260219 || !typeinfo_cast<CCBool*>(this->getUserObject("options-api"_spr)) || static_cast<CCBool*>(!this->getUserObject("options-api"_spr))->getValue() || !typeinfo_cast<GameOptionsLayer*>(this)) return;
 
 		OAPIGameOptionsLayer* fooBar = reinterpret_cast<OAPIGameOptionsLayer*>(this);
 		if (fooBar->m_baseGameLayer->m_level->m_levelType != GJLevelType::Editor) return;
