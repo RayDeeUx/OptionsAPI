@@ -195,7 +195,6 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 				"goldFont.fnt", false, 0, 
 				nullptr
 			);
-			m_fields->fuckingStupidGoldFontLabel = this->m_mainLayer->getChildByType<CCLabelBMFont>(0);
 
 			addToggle("HELLO WORLD", -1, false, "HELLO WORLD");
 		}
