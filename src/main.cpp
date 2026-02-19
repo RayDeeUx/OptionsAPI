@@ -145,10 +145,8 @@ class $modify(GameLevelOptionsLayer) {
 					m_level->m_cbsOverride = 2;
 					if (origCBFOverride == 2) m_level->m_cbsOverride = 0;
 				}
-				if (auto enableCBF = GJOptionsLayer::getToggleButton(3); enableCBF) enableCBF->toggle(m_level->m_cbsOverride == 1);
-				else geode::Notification::create("[enableCBF] NOT FOUND!!", NotificationIcon::Error, 10.f)->show();
-				if (auto disableCBF = GJOptionsLayer::getToggleButton(4); disableCBF) disableCBF->toggle(m_level->m_cbsOverride == 2);
-				else geode::Notification::create("[disableCBF] NOT FOUND!!", NotificationIcon::Error, 10.f)->show();
+				if (auto enableCBF = GJOptionsLayer::getToggleButton(3); enableCBF) enableCBF->toggle(origCBFOverride != 2);
+				if (auto disableCBF = GJOptionsLayer::getToggleButton(4); disableCBF) disableCBF->toggle(origCBFOverride != 1);
 				return;
 			}
 			#endif
