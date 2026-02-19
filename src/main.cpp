@@ -123,9 +123,9 @@ class $modify(GameLevelOptionsLayer) {
 class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 	// sorry for swearing in source code nin, you know how it is with me seeing rob fumble harder than the average NFL player --raydeeux
 	struct Fields {
-		CCMenuItemSpriteExtra* fuckingStupidIgnoreDamageToggle = nullptr;
+		CCMenuItemToggler* fuckingStupidIgnoreDamageToggle = nullptr;
 		CCLabelBMFont* fuckingStupidGoldFontLabel = nullptr;
-		CCMenuItemSpriteExtra* fuckingStupidPlaceholderToggle = nullptr;
+		CCMenuItemToggler* fuckingStupidPlaceholderToggle = nullptr;
 		CCLabelBMFont* fuckingStupidPlaceholderLabel = nullptr;
 	};
 
@@ -181,7 +181,7 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 			constexpr int placeholderToggleTag = 0;
 			addToggle("PLACEHOLDER TOGGLE", placeholderToggleTag, false, ""); // DO NOT ADD DESCRIPTION. OTHERWISE THAT'S ONE MORE BUTTON TO GETCHILDBYTAG AND THAT WILL BE A FUCKING PAIN. --raydeeux
 			
-			m_fields->fuckingStupidPlaceholderToggle = this->m_buttonMenu->getChildByTag(placeholderToggleTag);
+			m_fields->fuckingStupidPlaceholderToggle = typeinfo_cast<CCMenuItemToggler*>(this->m_buttonMenu->getChildByTag(placeholderToggleTag));
 			if (!m_fields->fuckingStupidPlaceholderToggle) geode::Notification::create("[Toggle] SOMETHING WENT WRONG. SCREENSHOT THIS, QUICK!!", NotificationIcon::Error, 10.f)->show(); // DEBUG LINE, REMOVE FROM PROD!!! --raydeeux
 
 			m_fields->fuckingStupidPlaceholderLabel = this->m_mainLayer->getChildByType<CCLayer>(0)->getChildByType<CCLabelBMFont>(-1);
