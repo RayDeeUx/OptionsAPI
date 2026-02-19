@@ -241,9 +241,9 @@ class $modify(GJOptionsLayer) {
 		auto fields = fooBar->m_fields.self();
 		if (!fields) return;
 		
-		if (auto node = fooBar->m_mainLayer->getChildByType<CCLabelBMFont>(0); node && static_cast<std::string>(node->getString()) == "Ignore Damage" && static_cast<std::string>(node->getFntFile()) == "goldFont.fnt") {
+		if (auto node = fooBar->getChildByType<CCLabelBMFont>(0); node && static_cast<std::string>(node->getString()) == "Ignore Damage" && static_cast<std::string>(node->getFntFile()) == "goldFont.fnt") {
 			node->setScale(page == 0 ? .5f : 0);
-		} else if (auto node = fooBar->m_mainLayer->getChildByType<CCLabelBMFont>(0)) geode::Notification::create(fmt::format("node: {}, string: {}, fntFile: {}", node != nullptr, node->getString(), node->getFntFile()), NotificationIcon::Info, 10.f)->show();
+		} else if (auto node = fooBar->getChildByType<CCLabelBMFont>(0)) geode::Notification::create(fmt::format("node: {}, string: {}, fntFile: {}", node != nullptr, node->getString(), node->getFntFile()), NotificationIcon::Info, 10.f)->show();
 		else geode::Notification::create("I FUCKING HATE ROBTOP, SCREENSHOT THIS", NotificationIcon::Error, 10.f)->show();
 
 		if (auto node = fields->fuckingStupidIgnoreDamageToggle) node->setScale(page == 0 ? 1 : 0);
