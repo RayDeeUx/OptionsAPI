@@ -18,7 +18,7 @@ using EditInitialCallback = std::function<bool()>;
 #define TOGGLEEVENT(evname, toggle, call) \
 class Add##evname##ToggleEvent : public Event<Add##evname##ToggleEvent, bool(std::string_view name, std::string_view id, toggle callback, call initialValue, std::string_view desc)> { \
 public: \
-    using Event::Event;
+    using Event::Event; \
     std::string m_name; \
     std::string m_id; \
     toggle m_callback; \
