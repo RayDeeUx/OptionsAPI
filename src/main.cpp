@@ -111,8 +111,12 @@ class $modify(GameLevelOptionsLayer) {
 
 	void didToggle(int opt) {
 		switch (opt) {
-			case 1: case 2: GEODE_MOBILE(case 3: case 4:) // remove ifdefs once desktop also gets CBF overrides --raydeeux
+			case 1: case 2:
 				return GameLevelOptionsLayer::didToggle(opt);
+			#ifdef GEODE_IS_MOBILE // remove ifdefs once desktop also gets CBF overrides --raydeeux
+			case 3: case 4:
+				return geode::Notification::create("FUCK ROBTOP AND HIS SHITTY CODE. IM REDOING THIS MYSELF.", NotificationIcon::Error, 10.f)->show();
+			#endif
 			default:
 				return std::next(g_preToggles.begin(), opt - GEODE_DESKTOP(3) GEODE_MOBILE(5))->second.m_callback(m_level); // this might be stupid idk
 		}
@@ -142,6 +146,7 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 
 	void setupOptions() {
 		this->setTag(20260219);
+		this->setUserObject("options-api"_spr, CCBool::create(true));
 		auto winSize = CCDirector::get()->getWinSize();
 
 		// robtop i hate you so f!@$%^&*(*&^%$#$%^&*ing much right now --raydeeux
@@ -214,6 +219,26 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 			addToggle("HELLO WORLD", -28, false, "HELLO WORLD");
 			addToggle("HELLO WORLD", -29, false, "HELLO WORLD");
 			addToggle("HELLO WORLD", -30, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -31, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -32, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -33, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -34, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -35, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -36, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -37, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -38, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -39, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -40, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -41, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -42, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -43, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -44, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -45, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -46, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -47, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -48, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -49, false, "HELLO WORLD");
+			addToggle("HELLO WORLD", -50, false, "HELLO WORLD");
 		}
 
 		CCMenuItemSpriteExtra* platUI = CCMenuItemSpriteExtra::create(
@@ -258,11 +283,19 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 	}
 };
 
+/*
+welcome 2.208!
+this stupid hook was necessary because robtop did a stupid thing
+where the Ignore Damage toggle visually became a part of the page
+w/o being a part of the GJOptionsPage pagination system.
+so a lot of node tagging and node casting had to happen.
+--raydeeux
+*/
 #include <Geode/modify/GJOptionsLayer.hpp>
 class $modify(GJOptionsLayer) {
 	void goToPage(int page) {
 		GJOptionsLayer::goToPage(page);
-		if (this->getTag() != 20260219 || !typeinfo_cast<GameOptionsLayer*>(this)) return;
+		if (this->getTag() != 20260219 || !this->getUserObject("options-api"_spr) || !this->getUserObject("options-api"_spr)->getValue() || !typeinfo_cast<GameOptionsLayer*>(this)) return;
 
 		OAPIGameOptionsLayer* fooBar = reinterpret_cast<OAPIGameOptionsLayer*>(this);
 		if (fooBar->m_baseGameLayer->m_level->m_levelType != GJLevelType::Editor) return;
