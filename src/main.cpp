@@ -142,7 +142,7 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 		this->m_gap = 37.f;
 		this->m_offset = 32.f;
 
-		// TODO: full recreation to add descriptions and fix the stupid Practice Music Sync toggle
+		// full recreation to add descriptions and fix the stupid Practice Music Sync toggle
 		addToggle("Auto-Retry", 1, GameManager::get()->getGameVariable("0026"), "Instantly start a new attempt instead of showing the restart menu.");
 		addToggle("Auto-Checkpoints", 2, GameManager::get()->getGameVariable("0027"), "Automatically place checkpoints occasionally.");
 		addToggle("Show Progress Bar", 3, GameManager::get()->m_showProgressBar, "Show the progress bar at the top of the screen.");
@@ -162,9 +162,9 @@ class $modify(OAPIGameOptionsLayer, GameOptionsLayer) {
 				// in reality this should be GJOptionsLayer::onToggle with some extra stuff but it's easier to just recreate it
 				GameManager::get()->getGameVariable("0173"), 
 				// highkey i eyeballed the CCPoint based on a screenshot cheeseworks sent here: https://discord.com/channels/911701438269386882/911702535373475870/1473814193152069844 [discord, #mod-dev-chat] --raydeeux
-				m_buttonMenu, ccp(345, 87), this,
+				m_buttonMenu, ccp(410, 87), this,
 				this, 0.7f, 0.5f, 
-				m_maxLabelWidth, ccp(7, 0), 
+				m_maxLabelWidth, ccp(0, 0), 
 				"goldFont.fnt", false, 0, 
 				nullptr
 			);
