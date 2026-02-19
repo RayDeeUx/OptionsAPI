@@ -89,6 +89,10 @@ class $modify(GameLevelOptionsLayer) {
         }
     }
 
+	struct Fields {
+		CCLabelBMFont* debugLabel = nullptr;
+	};
+
 	void setupOptions() {
 		auto winSize = CCDirector::get()->getWinSize();
 
@@ -99,6 +103,10 @@ class $modify(GameLevelOptionsLayer) {
 		// do this to add CBF overrides to mirror vanilla GD vehavior --raydeeux
 		addToggle("Enable CBS", 3, m_level->m_cbsOverride == 1, "Force <cg>enable</c> <cy>Click Between Steps</c> on this level regardless of the global setting.");
 		addToggle("Disable CBS", 4, m_level->m_cbsOverride == 2, "Force <cr>disable</c> <cy>Click Between Steps</c> on this level regardless of the global setting.");
+
+		m_fields->debugLabel = CCLabelBMFont::create(fmt::format("{}", m_level->m_cbsOverride).c_str(), "bigFont.fnt");
+		this->m_mainLayer->addChild(m_fields->debugLabel);
+		m_fields->debugLabel->setPosition(winSize / 2.f);
 		#endif
 
 		int index = GEODE_DESKTOP(3) GEODE_MOBILE(5); // remove ifdefs once desktop also gets CBF overrides --raydeeux
@@ -139,22 +147,35 @@ class $modify(GameLevelOptionsLayer) {
 						return;
 					}
 				*/
+				bool enableCBFOrig = false;
+				if (auto enableCBF = GJOptionsLayer::getToggleButton(3); enableCBF) {
+					enableCBFOrig = enableCBF->isToggled();
+					enableCBF->toggle(false);
+				}
+				bool disableCBFOrig = false;
+				if (auto disableCBF = GJOptionsLayer::getToggleButton(4); disableCBF) {
+					disableCBFOrig = disableCBF->isToggled();
+					disableCBF->toggle(false);
+				}
+
 				const int origCBFOverride = m_level->m_cbsOverride;
 				if (opt == 3) {
 					m_level->m_cbsOverride = 1;
 					if (origCBFOverride == 1) m_level->m_cbsOverride = 0;
-				} else if (opt == 4) {
+				}
+				if (opt == 4) {
 					m_level->m_cbsOverride = 2;
 					if (origCBFOverride == 2) m_level->m_cbsOverride = 0;
 				}
-				if (auto enableCBF = GJOptionsLayer::getToggleButton(3); enableCBF) {
-					enableCBF->toggle(false);
-					if (m_level->m_cbsOverride == 1) enableCBF->toggle(true);
+
+				if (m_level->m_cbsOverride == 1) {
+					if (auto enableCBF = GJOptionsLayer::getToggleButton(3); enableCBF) enableCBF->toggle(enableCBFOrig);
 				}
-				if (auto disableCBF = GJOptionsLayer::getToggleButton(4); disableCBF) {
-					disableCBF->toggle(false);
-					if (m_level->m_cbsOverride == 2) disableCBF->toggle(true);
+				if (m_level->m_cbsOverride == 2) {
+					if (auto disableCBF = GJOptionsLayer::getToggleButton(4); disableCBF) disableCBF->toggle(disableCBFOrig);
 				}
+
+				if (m_fields->debugLabel) m_fields->debugLabel->setString(fmt::format("{} (formerly {})", m_level->m_cbsOverride, origCBFOverride).c_str());
 				return;
 			}
 			#endif
